@@ -1,0 +1,63 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+export function Navbar() {
+  const pathname = usePathname();
+
+  return (
+    <header className="sticky top-0 z-50 glass">
+      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <img
+            src="/cf-badge.png"
+            alt="CollectorFlex"
+            className="w-9 h-9 rounded-lg shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/40 transition-shadow"
+          />
+          <span className="font-display text-xl font-bold text-surface-100">
+            Collector<span className="text-brand-400">Flex</span>
+          </span>
+        </Link>
+
+        <div className="flex items-center gap-1">
+          <NavLink href="/" active={pathname === "/"}>
+            Home
+          </NavLink>
+          <NavLink href="/community" active={pathname === "/community"}>
+            Community
+          </NavLink>
+          <Link
+            href="#"
+            className="ml-3 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-medium transition-colors"
+          >
+            Join
+          </Link>
+        </div>
+      </nav>
+    </header>
+  );
+}
+
+function NavLink({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+        active
+          ? "text-brand-400 bg-brand-500/10"
+          : "text-surface-300 hover:text-surface-100 hover:bg-surface-800/50"
+      }`}
+    >
+      {children}
+    </Link>
+  );
+}
