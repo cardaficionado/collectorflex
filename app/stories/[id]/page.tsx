@@ -15,9 +15,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const story = getStoryById(params.id);
+  const { id } = await params;
+  const story = getStoryById(id);
   if (!story) return {};
   return {
     title: `${story.title} — CollectorFlex`,
@@ -25,12 +26,14 @@ export async function generateMetadata({
     openGraph: {
       title: story.title,
       description: story.excerpt,
+      ...(story.thumbnailUrl && { images: [{ url: story.thumbnailUrl }] }),
     },
   };
 }
 
-export default function StoryPage({ params }: { params: { id: string } }) {
-  const story = getStoryById(params.id);
+export default async function StoryPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const story = getStoryById(id);
   if (!story) notFound();
 
   const related = getRecentStories(10).filter(
@@ -90,6 +93,16 @@ export default function StoryPage({ params }: { params: { id: string } }) {
           </div>
         </div>
       </header>
+
+      {story.thumbnailUrl && (
+        <div className="mb-10 animate-fade-up stagger-1 opacity-0">
+          <img
+            src={story.thumbnailUrl}
+            alt={story.title}
+            className="w-full h-56 sm:h-72 object-cover rounded-2xl bg-surface-800"
+          />
+        </div>
+      )}
 
       <div className="divider mb-10" />
 

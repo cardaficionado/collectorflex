@@ -47,6 +47,7 @@ export interface Story {
   publishedAt: string;
   collectionTag?: string;
   readTime: string;
+  thumbnailUrl?: string;
 }
 
 // ─── Sample Users ────────────────────────────────────────────────
@@ -328,6 +329,7 @@ Floor prices change. Memories don't. That's what I'm actually collecting.`,
     publishedAt: "2026-03-05",
     collectionTag: "NBA Top Shot",
     readTime: "4 min",
+    thumbnailUrl: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80",
   },
   {
     id: "story-2",
@@ -353,6 +355,7 @@ These are the plays I want to still be able to find in twenty years. Not because
     publishedAt: "2026-03-02",
     collectionTag: "NFL All Day",
     readTime: "6 min",
+    thumbnailUrl: "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800&q=80",
   },
   {
     id: "story-3",
@@ -376,6 +379,7 @@ My scores are worse now, probably. I've stopped checking the leaderboards closel
     publishedAt: "2026-02-28",
     collectionTag: "Sorare",
     readTime: "5 min",
+    thumbnailUrl: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&q=80",
   },
   {
     id: "story-4",
@@ -409,6 +413,7 @@ That's what this is all about, for me.`,
     publishedAt: "2026-02-20",
     collectionTag: "NBA Top Shot",
     readTime: "7 min",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=800&q=80",
   },
 ];
 
@@ -440,13 +445,16 @@ export function getStoriesByUsername(username: string): Story[] {
 
 export function getPlatformColor(platform: string): string {
   const colors: Record<string, string> = {
-    "NBA Top Shot": "bg-amber-500/10 text-amber-400 border-amber-500/20",
-    "NFL All Day": "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    Sorare: "bg-sky-500/10 text-sky-400 border-sky-500/20",
-    "UFC Strike": "bg-rose-500/10 text-rose-400 border-rose-500/20",
-    ToppsNFT: "bg-red-500/10 text-red-400 border-red-500/20",
-    Candy: "bg-pink-500/10 text-pink-400 border-pink-500/20",
-    "FIFA Collect": "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    "NBA Top Shot":      "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    "NFL All Day":       "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+    Sorare:              "bg-sky-500/10 text-sky-400 border-sky-500/20",
+    "NHL Breakaway":     "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
+    ToppsNFT:            "bg-red-500/10 text-red-400 border-red-500/20",
+    "Topps on Wax":      "bg-orange-500/10 text-orange-400 border-orange-500/20",
+    "Panini Blockchain": "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    "FIFA Collect":      "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    VeVe:                "bg-purple-500/10 text-purple-400 border-purple-500/20",
+    Candy:               "bg-pink-500/10 text-pink-400 border-pink-500/20",
   };
   return colors[platform] || "bg-surface-700/30 text-surface-300 border-surface-600/30";
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { users, getRecentStories, getPlatformColor } from "@/lib/data";
+import { JoinButton } from "@/components/JoinButton";
 
 export default function HomePage() {
   const recentStories = getRecentStories(3);
@@ -51,12 +52,7 @@ export default function HomePage() {
                 >
                   Explore Collectors
                 </Link>
-                <Link
-                  href="#"
-                  className="px-6 py-3 rounded-xl bg-surface-800/60 hover:bg-surface-800 text-surface-200 font-semibold border border-surface-700/50 transition-all"
-                >
-                  Claim Your Profile
-                </Link>
+                <JoinButton label="Claim Your Profile" variant="secondary" />
               </div>
             </div>
 
@@ -217,12 +213,7 @@ export default function HomePage() {
             Join a growing community of digital sports collectors. Build your
             profile, curate your showcase, and tell your story.
           </p>
-          <Link
-            href="#"
-            className="inline-flex px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold transition-all hover:shadow-lg hover:shadow-brand-500/20"
-          >
-            Claim Your Profile
-          </Link>
+          <JoinButton label="Claim Your Profile" variant="primary" className="inline-flex px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold transition-all hover:shadow-lg hover:shadow-brand-500/20" />
         </div>
       </section>
     </div>

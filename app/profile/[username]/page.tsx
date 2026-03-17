@@ -10,9 +10,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }): Promise<Metadata> {
-  const user = getUserByUsername(params.username);
+  const { username } = await params;
+  const user = getUserByUsername(username);
   if (!user) return {};
   return {
     title: `${user.displayName} (@${user.username}) — CollectorFlex`,
@@ -24,15 +25,16 @@ export async function generateMetadata({
   };
 }
 
-export default function ProfilePage({
+export default async function ProfilePage({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }) {
-  const user = getUserByUsername(params.username);
+  const { username } = await params;
+  const user = getUserByUsername(username);
   if (!user) notFound();
 
-  const stories = getStoriesByUsername(params.username);
+  const stories = getStoriesByUsername(username);
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
