@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { users, getRecentStories, getPlatformColor } from "@/lib/data";
+import { users, getRecentTakes, getPlatformColor } from "@/lib/data";
 import { JoinButton } from "@/components/JoinButton";
 
 const ALL_PLATFORMS = [
@@ -19,7 +19,7 @@ const ALL_PLATFORMS = [
 ];
 
 export default function CommunityPage() {
-  const stories = getRecentStories(10);
+  const stories = getRecentTakes(10);
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
 
   const filteredStories = selectedPlatform
@@ -41,7 +41,7 @@ export default function CommunityPage() {
         {/* ── Stories Feed ──────────────────────────────── */}
         <div className="lg:col-span-2 space-y-6">
           <h2 className="font-display text-xl text-surface-200 mb-4">
-            Recent Stories
+            Recent Takes
           </h2>
           {filteredStories.length > 0 ? (
             filteredStories.map((story) => (
@@ -93,7 +93,7 @@ export default function CommunityPage() {
                         </span>
                       )}
                       <Link
-                        href={`/stories/${story.id}`}
+                        href={`/takes/${story.id}`}
                         className="text-xs text-surface-500 hover:text-brand-400 transition-colors"
                       >
                         Read more &rarr;
@@ -102,7 +102,7 @@ export default function CommunityPage() {
                   </div>
 
                   {story.thumbnailUrl && (
-                    <Link href={`/stories/${story.id}`} className="shrink-0">
+                    <Link href={`/takes/${story.id}`} className="shrink-0">
                       <img
                         src={story.thumbnailUrl}
                         alt={story.title}
@@ -146,7 +146,7 @@ export default function CommunityPage() {
                       {user.displayName}
                     </p>
                     <p className="text-xs text-surface-500 truncate">
-                      {user.collections.map((c) => c.platform).join(" · ")}
+                      {user.showcases.map((c) => c.platform).join(" · ")}
                     </p>
                   </div>
                   <span className="text-xs text-surface-600">

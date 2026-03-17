@@ -11,15 +11,15 @@ export interface User {
     twitter?: string;
     email?: string;
   };
-  collections: Collection[];
+  showcases: Showcase[];
   stats: {
-    collections: number;
+    showcases: number;
     showcaseItems: number;
-    stories: number;
+    takes: number;
   };
 }
 
-export interface Collection {
+export interface Showcase {
   id: string;
   name: string;
   platform: string;
@@ -38,7 +38,7 @@ export interface ShowcaseItem {
   tags?: string[];
 }
 
-export interface Story {
+export interface Take {
   id: string;
   author: User;
   title: string;
@@ -63,7 +63,7 @@ export const users: User[] = [
       discord: "momentshunter#4421",
       twitter: "@momentshunter",
     },
-    collections: [
+    showcases: [
       {
         id: "ts-legendary",
         name: "Legendary Moments",
@@ -117,7 +117,7 @@ export const users: User[] = [
         ],
       },
     ],
-    stats: { collections: 2, showcaseItems: 40, stories: 5 },
+    stats: { showcases: 2, showcaseItems: 40, takes: 5 },
   },
   {
     username: "gridironfiles",
@@ -129,7 +129,7 @@ export const users: User[] = [
       twitter: "@gridironfiles",
       discord: "gridironfiles#8812",
     },
-    collections: [
+    showcases: [
       {
         id: "ad-playmakers",
         name: "Playmakers Series",
@@ -149,7 +149,7 @@ export const users: User[] = [
         ],
       },
     ],
-    stats: { collections: 3, showcaseItems: 55, stories: 8 },
+    stats: { showcases: 3, showcaseItems: 55, takes: 8 },
   },
   {
     username: "cardaficionado",
@@ -161,7 +161,7 @@ export const users: User[] = [
       twitter: "@cardaficionado",
       discord: "cardaficionado",
     },
-    collections: [
+    showcases: [
       {
         id: "ca-topps-vintage",
         name: "Topps NFT Vault",
@@ -269,7 +269,7 @@ export const users: User[] = [
         ],
       },
     ],
-    stats: { collections: 5, showcaseItems: 77, stories: 4 },
+    stats: { showcases: 5, showcaseItems: 77, takes: 2 },
   },
   {
     username: "pitchcraft",
@@ -280,7 +280,7 @@ export const users: User[] = [
     contact: {
       twitter: "@pitchcraft_",
     },
-    collections: [
+    showcases: [
       {
         id: "sorare-squad",
         name: "Main Squad",
@@ -300,13 +300,13 @@ export const users: User[] = [
         ],
       },
     ],
-    stats: { collections: 2, showcaseItems: 22, stories: 3 },
+    stats: { showcases: 2, showcaseItems: 22, takes: 3 },
   },
 ];
 
 // ─── Sample Stories ──────────────────────────────────────────────
 
-export const stories: Story[] = [
+export const takes: Take[] = [
   {
     id: "story-1",
     author: users[0],
@@ -415,6 +415,102 @@ That's what this is all about, for me.`,
     readTime: "7 min",
     thumbnailUrl: "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=800&q=80",
   },
+  {
+    id: "story-5",
+    author: users[2],
+    title: "The Serial Number as Digital Condition",
+    excerpt:
+      "On NBA TopShot, every Moment in an edition is the same video with the same metadata. The only distinguishing feature is the mint number — and it's become the primary value lever, creating pricing hierarchies that can range from 2x to 100x above floor.",
+    content: `On NBA TopShot, every Moment within an edition is the same video highlight with the same metadata. The only distinguishing feature is the mint number — the sequential order in which each was created on the blockchain. This single number has become the primary value lever for differentiating among identical editions, creating a pricing hierarchy that can range from 2x to 100x or more above a floor-priced copy.
+
+The market has organically developed a clear tiering system.
+
+**Tier 1 — The Trophy Serials**
+
+Serial #1 and the player's jersey number. These are the Gem Mint PSA 10 equivalent of the digital world. A #1 serial LeBron James Moment once sold for over $71,000 while copies with unremarkable serials traded for a fraction of that. Jersey number matches — #23 for LeBron, #30 for Curry — create a narrative connection between the number and the player that collectors find deeply compelling.
+
+**Tier 2 — Single Digits**
+
+Serials #2 through #9. Only nine exist per edition, creating mathematical scarcity within scarcity. The premium here is driven by the same logic as low-number limited prints in art — proximity to the origin.
+
+**Tier 3 — Low Doubles and Triples**
+
+Serials in the double-digit and triple-digit ranges follow a logarithmic premium curve — each additional digit roughly reduces the premium by an order of magnitude.
+
+**Tier 4 — Narrative Serials**
+
+Numbers with personal significance beyond the jersey number: birth year, draft position, career stat milestones, championship years. These require specialized knowledge to spot and value, creating opportunities for informed collectors.
+
+**Tier 5 — Perfect and Last Serials**
+
+The final serial in an edition (e.g., #10000/10000) and "perfect" matches (e.g., #100/100). These bookend serials carry their own collector appeal.
+
+Sorare follows a similar pattern. While the platform's fantasy game utility is the primary value driver, the first minted card of each edition consistently commands a premium. Cards where the serial matches the player's squad number carry collector premiums completely disconnected from game utility.
+
+This hierarchy is strikingly similar to how physical card grading works, just mapped onto a different axis. Where PSA gives you a 1-10 scale based on physical attributes, the digital market has created an informal scale based on positional attributes. The underlying psychology is the same: collectors want verifiable differentiation, and they'll pay for it.
+
+**The Set Registry Is Already Here**
+
+Here's something most people outside the TopShot community haven't noticed: NBA TopShot has already built the embryonic version of a PSA Set Registry — and serial numbers are the grading mechanism.
+
+When a collector completes a set on TopShot, the platform now calculates and displays their "Lowest Average Serial" — the mean of the lowest serial number they own from each edition in the set. Complete the 2025-26 Marquee set with all #1 serials? Your average is 1. Complete it with a mix of #3s, #47s, and #812s? Your average reflects that. The number becomes a composite quality score for the entire set, visible to every other collector.
+
+This is functionally identical to what PSA's Set Registry does with grade point averages. PSA established their registry in 2001 and it ranks collectors' sets by weighted GPA — the average grade across all cards, weighted by each card's relative rarity. The registry turned set building from a private hobby into a competitive leaderboard sport. Collectors started buying higher-graded copies specifically to improve their registry ranking, which drove demand for top-graded cards across the board.
+
+TopShot's version substitutes serial number for condition grade, but the structural incentives are identical. Competition drives upgrading: once collectors can see they rank #47 on a set's leaderboard, the impulse to improve that ranking is powerful. Leaderboard rewards compound the effect — TopShot already distributes exclusive airdrops to top-ranked collectors, and when serial-based set rankings carry similar reward structures, the economic motivation to hold low serials intensifies dramatically.
+
+Set completionism also changes the demand curve. Nobody pays a premium for serial #3 of a mid-tier role player's Common Moment in isolation. But if that #3 is the difference between ranking #1 and #5 on a set leaderboard? Suddenly, low serials on every card in the set carry marginal value — the same dynamic PSA registries created for physical cards.
+
+The infrastructure for competitive, serial-ranked set collecting isn't speculative. It's already deployed. The question is just how far and how fast the platforms push it.`,
+    publishedAt: "2026-03-10",
+    collectionTag: "NBA Top Shot",
+    readTime: "8 min",
+    thumbnailUrl: "https://images.unsplash.com/photo-1612404730960-5c71577fca11?w=800&q=80",
+  },
+  {
+    id: "story-6",
+    author: users[2],
+    title: "The Digital Sports Collectibles Landscape, Early 2026",
+    excerpt:
+      "Digital sports collectibles emerged as a mainstream phenomenon in early 2021 and then corrected hard. Here's where the surviving platforms actually stand — the numbers, the risks, and what comes next.",
+    content: `Digital sports collectibles emerged as a mainstream phenomenon in early 2021 when NBA TopShot surged to over $200,000 single-Moment sales and monthly volumes exceeding $225 million. The subsequent correction was severe but not fatal. As of early 2026, the ecosystem has consolidated around a small number of licensed platforms, each with distinct value propositions — and distinct risks.
+
+**NBA TopShot (NBA)**
+
+Video Moments with Fast Break fantasy integration. Monthly volumes have consolidated in the low seven-figure range post-bubble, but August 2025 saw the highest monthly transaction count in over three years. Dapper Labs is refocusing on rookie scarcity — fewer than 5,000 Cooper Flagg or Wembanyama rookie collectibles will ever exist — and digital autograph inscriptions for the 2025-26 season. The scarcity thesis is coherent. Execution is what's left to prove.
+
+**Sorare (Soccer, NBA, MLB)**
+
+Fantasy card game with real-stakes rewards on Ethereum. 2M+ total users. 2024 revenue was approximately $50 million. Monthly volumes dipped to $2.7 million in June 2025 after the removal of ETH threshold rewards, then rebounded sharply to $20M+ in August 2025 after the introduction of "hot streak" mechanics — a clean demonstration of how sensitive engagement is to incentive design. Cash reserves have declined from $230M in 2023 to an estimated $41M by end of 2025, making the next strategic phase critical. A potential migration from Ethereum L2 Starkware to Solana could bring in meaningful new revenue.
+
+**Panini Blockchain (NBA, NFL, WNBA, FIFA, MLB, UFC, WWE)**
+
+Digital trading cards mirroring physical Panini brands — Prizm, National Treasures, Kaboom. The breakout story of 2025. Annual sales volume trajectory of $60-70M, up from $13.5M in 2024 and smashing the prior record of $31.8M in 2022. Record single sale of $175,000 for a Caitlin Clark Green Kaboom 1/1. Average transaction price climbed from under $30 through most of 2022-2024 to over $99 by September 2025.
+
+The platform faces existential licensing risk: NBA license expired October 2025, NFL license expires April 2026. The private blockchain requires ongoing Panini investment to operate. An option to remint select assets to Ethereum is coming in 2026 — a meaningful step toward collector ownership security.
+
+**FIFA Collect**
+
+Blockchain-powered platform launched September 2022 by FIFA, now on the Avalanche blockchain. Panini partnership drops celebrating World Cup history began March 2025, connecting decades of physical sticker album tradition to digital. The institutional backing here is real, but engagement depth remains to be demonstrated.
+
+**ToppsNFT (MLB, Bundesliga)**
+
+Platform shut down in 2025. Assets were migrated to the Polygon blockchain with true self-custody contracts — but unopened packs could not be transferred. The closure illustrates platform risk clearly. It also removed supply from the active market, which may benefit remaining holders long-term.
+
+**Candy Digital (MLB, NASCAR, WWE)**
+
+Founded 2021, raised $100M at a $1.5B valuation. Fanatics divested its 60% stake in January 2023, citing an "imploding NFT market." Now led by Galaxy Digital. Futureverse acquired Candy in 2025 and then went into receivership a few months later. Reduced activity, uncertain future.
+
+**What the landscape tells us**
+
+The platforms that are growing share common traits: real utility beyond speculation (fantasy mechanics, set registry competition), institutional licensing with depth, and active supply management. The ones that failed or stagnated leaned too heavily on speculative demand without building durable engagement loops.
+
+For collectors, the platform risk lesson from ToppsNFT and Candy is worth internalizing: the asset is only as permanent as the infrastructure supporting it. Self-custody and blockchain migration options aren't nice-to-haves. They're the difference between owning something and renting access to it.`,
+    publishedAt: "2026-03-08",
+    collectionTag: "ToppsNFT",
+    readTime: "9 min",
+    thumbnailUrl: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80",
+  },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────
@@ -427,20 +523,20 @@ export function getAllUsernames(): string[] {
   return users.map((u) => u.username);
 }
 
-export function getRecentStories(limit: number = 10): Story[] {
-  return stories.slice(0, limit);
+export function getRecentTakes(limit: number = 10): Take[] {
+  return takes.slice(0, limit);
 }
 
-export function getStoryById(id: string): Story | undefined {
-  return stories.find((s) => s.id === id);
+export function getTakeById(id: string): Take | undefined {
+  return takes.find((s) => s.id === id);
 }
 
-export function getAllStoryIds(): string[] {
-  return stories.map((s) => s.id);
+export function getAllTakeIds(): string[] {
+  return takes.map((s) => s.id);
 }
 
-export function getStoriesByUsername(username: string): Story[] {
-  return stories.filter((s) => s.author.username === username);
+export function getTakesByUsername(username: string): Take[] {
+  return takes.filter((s) => s.author.username === username);
 }
 
 export function getPlatformColor(platform: string): string {

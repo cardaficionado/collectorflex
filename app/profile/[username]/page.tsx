@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getUserByUsername, getAllUsernames, getPlatformColor, getStoriesByUsername } from "@/lib/data";
+import { getUserByUsername, getAllUsernames, getPlatformColor, getTakesByUsername } from "@/lib/data";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -34,7 +34,7 @@ export default async function ProfilePage({
   const user = getUserByUsername(username);
   if (!user) notFound();
 
-  const stories = getStoriesByUsername(username);
+  const takes = getTakesByUsername(username);
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
@@ -61,18 +61,40 @@ export default async function ProfilePage({
 
             {/* Stats */}
             <div className="flex gap-8 mt-6">
-              <Stat label="Collections" value={user.stats.collections} />
-              <Stat label="Items" value={user.stats.showcaseItems} />
-              {stories.length > 0 ? (
-                <a href="#stories" className="hover:opacity-75 transition-opacity">
-                  <Stat label="Stories" value={user.stats.stories} />
+              <Stat label="Showcases" value={user.stats.showcases} />
+              {takes.length > 0 ? (
+                <a href="#takes" className="hover:opacity-75 transition-opacity">
+                  <Stat label="Takes" value={user.stats.takes} />
                 </a>
               ) : (
-                <Stat label="Stories" value={user.stats.stories} />
+                <Stat label="Takes" value={user.stats.takes} />
               )}
             </div>
           </div>
         </div>
+
+        {/* Platform badges */}
+        {(() => {
+          const seen = new Set<string>();
+          const platforms = user.showcases.filter((s) => {
+            if (seen.has(s.platform)) return false;
+            seen.add(s.platform);
+            return true;
+          });
+          return (
+            <div className="flex flex-wrap gap-2 mt-5">
+              {platforms.map((showcase) => (
+                <a
+                  key={showcase.platform}
+                  href={`#showcase-${showcase.id}`}
+                  className={`text-xs px-2.5 py-1 rounded-full border transition-all hover:brightness-125 ${getPlatformColor(showcase.platform)}`}
+                >
+                  {showcase.platform}
+                </a>
+              ))}
+            </div>
+          );
+        })()}
 
         {/* Contact */}
         <div className="divider my-6" />
@@ -100,52 +122,48 @@ export default async function ProfilePage({
         </div>
       </section>
 
-      {/* ── Collections ─────────────────────────────────── */}
+      {/* ── Showcases ───────────────────────────────────── */}
       <section>
         <h2 className="font-display text-2xl text-surface-50 mb-6">
-          Collections
+          Showcases
         </h2>
 
         <div className="space-y-10">
-          {user.collections.map((collection) => (
-            <div
-              key={collection.id}
-              className="animate-fade-up"
-            >
-              {/* Collection Header */}
+          {user.showcases.map((showcase) => (
+            <div key={showcase.id} id={`showcase-${showcase.id}`} className="animate-fade-up">
               <div className="glass rounded-2xl overflow-hidden">
                 <div className="relative h-40 sm:h-52">
                   <img
-                    src={collection.coverImage}
-                    alt={collection.name}
+                    src={showcase.coverImage}
+                    alt={showcase.name}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-surface-950/90 via-surface-950/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-6">
                     <div className="flex items-center gap-3 mb-1">
                       <h3 className="font-display text-2xl text-white">
-                        {collection.name}
+                        {showcase.name}
                       </h3>
                       <span
-                        className={`text-xs px-2.5 py-1 rounded-full border ${getPlatformColor(collection.platform)}`}
+                        className={`text-xs px-2.5 py-1 rounded-full border ${getPlatformColor(showcase.platform)}`}
                       >
-                        {collection.platform}
+                        {showcase.platform}
                       </span>
                     </div>
                     <p className="text-sm text-surface-300">
-                      {collection.itemCount} items
+                      {showcase.itemCount} items
                     </p>
                   </div>
                 </div>
 
                 <div className="p-6">
                   <p className="text-surface-400 text-sm leading-relaxed mb-6">
-                    {collection.description}
+                    {showcase.description}
                   </p>
 
                   {/* Showcase Items */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {collection.items.map((item) => (
+                    {showcase.items.map((item) => (
                       <div
                         key={item.id}
                         className="group rounded-xl bg-surface-900/60 border border-surface-700/30 p-5 flex flex-col gap-3 card-hover"
@@ -191,45 +209,45 @@ export default async function ProfilePage({
         </div>
       </section>
 
-      {/* ── Stories ─────────────────────────────────────── */}
-      {stories.length > 0 && (
-        <section id="stories" className="mt-12">
+      {/* ── Takes ────────────────────────────────────────── */}
+      {takes.length > 0 && (
+        <section id="takes" className="mt-12">
           <h2 className="font-display text-2xl text-surface-50 mb-6">
-            Stories
+            Takes
           </h2>
           <div className="space-y-4">
-            {stories.map((story) => (
+            {takes.map((take) => (
               <Link
-                key={story.id}
-                href={`/stories/${story.id}`}
+                key={take.id}
+                href={`/takes/${take.id}`}
                 className="glass rounded-2xl p-6 card-hover flex flex-col sm:flex-row gap-5 block"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-3 mb-2">
                     <h3 className="font-display text-lg text-surface-50 hover:text-brand-400 transition-colors">
-                      {story.title}
+                      {take.title}
                     </h3>
-                    {story.collectionTag && (
+                    {take.collectionTag && (
                       <span
-                        className={`text-xs px-2.5 py-1 rounded-full border shrink-0 ${getPlatformColor(story.collectionTag)}`}
+                        className={`text-xs px-2.5 py-1 rounded-full border shrink-0 ${getPlatformColor(take.collectionTag)}`}
                       >
-                        {story.collectionTag}
+                        {take.collectionTag}
                       </span>
                     )}
                   </div>
                   <p className="text-sm text-surface-400 leading-relaxed line-clamp-2">
-                    {story.excerpt}
+                    {take.excerpt}
                   </p>
                 </div>
                 <div className="flex sm:flex-col sm:items-end gap-4 sm:gap-1 shrink-0 text-xs text-surface-500">
                   <span>
-                    {new Date(story.publishedAt).toLocaleDateString("en-US", {
+                    {new Date(take.publishedAt).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
                     })}
                   </span>
-                  <span>{story.readTime} read</span>
+                  <span>{take.readTime} read</span>
                 </div>
               </Link>
             ))}

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { users, getRecentStories, getPlatformColor } from "@/lib/data";
+import { users, getRecentTakes, getPlatformColor } from "@/lib/data";
 import { JoinButton } from "@/components/JoinButton";
 
 export default function HomePage() {
-  const recentStories = getRecentStories(3);
+  const recentStories = getRecentTakes(3);
 
   return (
     <div className="relative">
@@ -105,7 +105,7 @@ export default function HomePage() {
                 {user.bio}
               </p>
               <div className="flex flex-wrap gap-2">
-                {user.collections.map((c) => (
+                {user.showcases.map((c) => (
                   <span
                     key={c.id}
                     className={`text-xs px-2.5 py-1 rounded-full border ${getPlatformColor(c.platform)}`}
@@ -145,7 +145,7 @@ export default function HomePage() {
         <div className="flex items-end justify-between mb-10">
           <div>
             <h2 className="font-display text-3xl text-surface-50">
-              Latest Stories
+              Latest Takes
             </h2>
             <p className="mt-2 text-surface-400">
               Why we collect, in our own words.
@@ -157,7 +157,7 @@ export default function HomePage() {
           {recentStories.map((story) => (
             <Link
               key={story.id}
-              href={`/stories/${story.id}`}
+              href={`/takes/${story.id}`}
               className="glass rounded-2xl p-6 card-hover flex flex-col sm:flex-row gap-6 block"
             >
               <div className="flex items-center gap-3 sm:w-48 shrink-0">
